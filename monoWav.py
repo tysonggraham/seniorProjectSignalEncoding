@@ -3,86 +3,91 @@ import wave
 import struct
 import pyaudio
 
-freq = 16000.0
-freq2 = freq-1000
-data_size = 40000
+data_size = 11400
 fname = "WaveTest.wav"
 frate = 11025.0  # framerate as a float
 amp = 8000.0     # multiplier for amplitude
 
-cap = ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '{', '}', '|', ':', '"', '<', '>', '?']
-low = ['1', '2', '3', '4'] #TODO: FINISH
-
-if x.isupper()
-	duration = 2;
-
-	# Lowercase the letter
-	x = x.lower();
-elif (x in cap)
-	duration = 2;
-
-	# Find where x is in cap
-	# Set x to that location in lower
-	x = low[cap.index(x)]
-else
-	duration = 1;
-
-frequencies = { 
-	'a' : 16000,
-	'b' : 15750,
-	'c' : 15500,
-	'd' : 15250,
-	'e' : 15000,
-	'f' : 14750,
-	'g' : 14500,
-	'h' : 14250,
-	'i' : 14000,
-	'j' : 13750,
-	'k' : 13500,
-	'l' : 13250,
-	'm' : 13000,
-	'n' : 12750,
-	'o' : 12500,
-	'p' : 12250,
-	'q' : 12000,
-	'r' : 11750,
-	's' : 11500,
-	't' : 11250,
-	'u' : 11000,
-	'v' : 10750,
-	'w' : 10500,
-	'x' : 10250,
-	'y' : 10000,
-	'z' : 9750,
-	'1' : 9500,
-	'2' : 9250,
-	'3' : 9000,
-	'4' : 8750,
-	'5' : 8500,
-	'6' : 8250,
-	'7' : 8000,
-	'8' : 7750,
-	'9' : 7500,
-	'0' : 7250,
-	'-' : 7000,
-	'=' : 6750,
-	'[' : 6500,
-	']' : 6250,
-	'\\' : 6000,
-	';' : 5750,
-	'\'' : 5500,
-	',' : 5250,
-	'.' : 5000,
-	'/' : 4750,
-}
+userInput = 'Hello, World!'
 
 sine_list_x = []
-for x in range(int(data_size/2)):
-    sine_list_x.append(math.sin(2*math.pi*freq*(x/frate)))
+durationStart = 0;
 
-for x in range(int(data_size/2), data_size):
-    sine_list_x.append(math.sin(2*math.pi*freq2*(x/frate)))
+for letter in userInput:
 
+	cap = ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '{', '}', '|', ':', '"', '<', '>', '?']
+	low = ['1', '2', '3', '4'] #TODO: FINISH
+
+	if letter.isupper():
+		duration = 2 * data_size
+
+		# Lowercase the letter
+		letter = letter.lower()
+	elif (letter in cap):
+		duration = 2 * data_size
+
+		# Find where letter is in cap
+		# Set letter to that location in lower
+		letter = low[cap.index(letter)]
+	else:
+		duration = 1 * data_size
+
+	freq = { 
+		'a' : 16000,
+		'b' : 15750,
+		'c' : 15500,
+		'd' : 15250,
+		'e' : 15000,
+		'f' : 14750,
+		'g' : 14500,
+		'h' : 14250,
+		'i' : 14000,
+		'j' : 13750,
+		'k' : 13500,
+		'l' : 13250,
+		'm' : 13000,
+		'n' : 12750,
+		'o' : 12500,
+		'p' : 12250,
+		'q' : 12000,
+		'r' : 11750,
+		's' : 11500,
+		't' : 11250,
+		'u' : 11000,
+		'v' : 10750,
+		'w' : 10500,
+		'x' : 10250,
+		'y' : 10000,
+		'z' : 9750,
+		'1' : 9500,
+		'2' : 9250,
+		'3' : 9000,
+		'4' : 8750,
+		'5' : 8500,
+		'6' : 8250,
+		'7' : 8000,
+		'8' : 7750,
+		'9' : 7500,
+		'0' : 7250,
+		'-' : 7000,
+		'=' : 6750,
+		'[' : 6500,
+		']' : 6250,
+		'\\' : 6000,
+		';' : 5750,
+		'\'' : 5500,
+		',' : 5250,
+		'.' : 5000,
+		'/' : 4750,
+	}
+
+	print (freq.get(letter, 4500))
+	durationEnd = durationStart + duration
+	print ('duration End = ' + str(durationEnd))
+	for x in range(durationStart, durationEnd):
+		sine_list_x.append(math.sin(2*math.pi*freq.get(letter, 4500)*(x/frate)))
+	durationStart = durationEnd;
+print (sine_list_x)
 wav_file = wave.open(fname, 'w')
 
 nchannels = 1
