@@ -3,12 +3,14 @@ import wave
 import struct
 import pyaudio
 
-data_size = 11400
-fname = "WaveTest.wav"
+#This has something to do with the duration of each character we express in the signal.
+data_size = 11400 # duration each freqency is emitted for each character
+fname = "WaveTest.wav" # Filename
 frate = 11025.0  # framerate as a float
 amp = 8000.0     # multiplier for amplitude
-
+#TODO: Make this a prompt for input
 userInput = 'Hello, World!'
+# userInput = input('Please enter your message: \n')
 
 sine_list_x = []
 durationStart = 0;
@@ -16,7 +18,7 @@ durationStart = 0;
 for letter in userInput:
 
 	cap = ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '{', '}', '|', ':', '"', '<', '>', '?']
-	low = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '[', ']', '\', ';', '/'', ',','.', '/'] #TODO: FINISH
+	low = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '[', ']', '\', ';', '/'', ',','.', '/']
 
 	if letter.isupper():
 		duration = 2 * data_size
@@ -31,7 +33,8 @@ for letter in userInput:
 		letter = low[cap.index(letter)]
 	else:
 		duration = 1 * data_size
-
+		
+	# Each character is assigned a frequency here.
 	freq = { 
 		'a' : 16000,
 		'b' : 15750,
@@ -80,16 +83,17 @@ for letter in userInput:
 		'.' : 5000,
 		'/' : 4750,
 	}
-
-	print (freq.get(letter, 4500))
+	#This is to test what frequency we assigned for each character. The default case is 4500 which is for the space
+	#print (freq.get(letter, 4500))
 	durationEnd = durationStart + duration
-	print ('duration End = ' + str(durationEnd))
+	#print ('duration End = ' + str(durationEnd))
+	#This is where we add each frequency to the list to be emitted
 	for x in range(durationStart, durationEnd):
 		sine_list_x.append(math.sin(2*math.pi*freq.get(letter, 4500)*(x/frate)))
 	durationStart = durationEnd;
 print (sine_list_x)
 wav_file = wave.open(fname, 'w')
-
+#This should make it mono
 nchannels = 1
 sampwidth = 2
 framerate = int(frate)
