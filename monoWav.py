@@ -9,8 +9,8 @@ fname = "WaveTest.wav" # Filename
 frate = 11025.0  # framerate as a float
 amp = 8000.0     # multiplier for amplitude
 #TODO: Make this a prompt for input
-userInput = 'Hello, World!'
-# userInput = input('Please enter your message: \n')
+#userInput = 'Hello, World!'
+userInput = input('Please enter your message: \n')
 
 sine_list_x = []
 durationStart = 0;
