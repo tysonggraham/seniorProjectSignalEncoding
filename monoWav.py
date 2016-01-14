@@ -2,15 +2,18 @@ import math
 import wave
 import struct
 import pyaudio
+import sys
 
 #This has something to do with the duration of each character we express in the signal.
 data_size = 11400 # duration each freqency is emitted for each character
 fname = "WaveTest.wav" # Filename
 frate = 11025.0  # framerate as a float
-amp = 1000.0     # multiplier for amplitude
+amp = 10000.0     # multiplier for amplitude
 #TODO: Make this a prompt for input
 #userInput = 'Hello, World!'
-userInput = input('Please enter your message: \n')
+userInput = sys.argv[1] if (len(sys.argv) > 1) else input('Please enter your message: \n')
+
+#print (userInput)
 
 sine_list_x = []
 durationStart = 0;
@@ -36,52 +39,52 @@ for letter in userInput:
 		
 	# Each character is assigned a frequency here.
 	freq = { 
-		'a' : 16000,
-		'b' : 15750,
-		'c' : 15500,
-		'd' : 15250,
-		'e' : 15000,
-		'f' : 14750,
-		'g' : 14500,
-		'h' : 14250,
-		'i' : 14000,
-		'j' : 13750,
-		'k' : 13500,
-		'l' : 13250,
-		'm' : 13000,
-		'n' : 12750,
-		'o' : 12500,
-		'p' : 12250,
-		'q' : 12000,
-		'r' : 11750,
-		's' : 11500,
-		't' : 11250,
-		'u' : 11000,
-		'v' : 10750,
-		'w' : 10500,
-		'x' : 10250,
-		'y' : 10000,
-		'z' : 9750,
-		'1' : 9500,
-		'2' : 9250,
-		'3' : 9000,
-		'4' : 8750,
-		'5' : 8500,
-		'6' : 8250,
-		'7' : 8000,
-		'8' : 7750,
-		'9' : 7500,
-		'0' : 7250,
-		'-' : 7000,
-		'=' : 6750,
-		'[' : 6500,
-		']' : 6250,
-		'\\' : 6000,
-		';' : 5750,
-		'\'' : 5500,
-		',' : 5250,
-		'.' : 5000,
-		'/' : 4750,
+		'a' : 350,
+		'b' : 400,
+		'c' : 450,
+		'd' : 500,
+		'e' : 550,
+		'f' : 600,
+		'g' : 650,
+		'h' : 700,
+		'i' : 750,
+		'j' : 800,
+		'k' : 850,
+		'l' : 900,
+		'm' : 950,
+		'n' : 1000,
+		'o' : 1050,
+		'p' : 1100,
+		'q' : 1150,
+		'r' : 1200,
+		's' : 1250,
+		't' : 1300,
+		'u' : 1350,
+		'v' : 1400,
+		'w' : 1450,
+		'x' : 1500,
+		'y' : 1550,
+		'z' : 1600,
+		'1' : 1650,
+		'2' : 1700,
+		'3' : 1750,
+		'4' : 1800,
+		'5' : 1850,
+		'6' : 1900,
+		'7' : 1950,
+		'8' : 2000,
+		'9' : 2050,
+		'0' : 2100,
+		'-' : 2150,
+		'=' : 2200,
+		'[' : 2250,
+		']' : 2300,
+		'\\' : 2350,
+		';' : 2400,
+		'\'' : 2450,
+		',' : 2500,
+		'.' : 2550,
+		'/' : 2600,
 	}
 	#This is to test what frequency we assigned for each character. The default case is 4500 which is for the space
 	#print (freq.get(letter, 4500))
