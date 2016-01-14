@@ -7,7 +7,7 @@ import pyaudio
 data_size = 11400 # duration each freqency is emitted for each character
 fname = "WaveTest.wav" # Filename
 frate = 11025.0  # framerate as a float
-amp = 8000.0     # multiplier for amplitude
+amp = 1000.0     # multiplier for amplitude
 #TODO: Make this a prompt for input
 #userInput = 'Hello, World!'
 userInput = input('Please enter your message: \n')
@@ -18,7 +18,7 @@ durationStart = 0;
 for letter in userInput:
 
 	cap = ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '{', '}', '|', ':', '"', '<', '>', '?']
-	low = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '[', ']', '\', ';', '/'', ',','.', '/']
+	low = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '[', ']', '\\', ';', '\'', ',','.', '/']
 
 	if letter.isupper():
 		duration = 2 * data_size
@@ -91,7 +91,7 @@ for letter in userInput:
 	for x in range(durationStart, durationEnd):
 		sine_list_x.append(math.sin(2*math.pi*freq.get(letter, 4500)*(x/frate)))
 	durationStart = durationEnd;
-print (sine_list_x)
+#print (sine_list_x)
 wav_file = wave.open(fname, 'w')
 #This should make it mono
 nchannels = 1
