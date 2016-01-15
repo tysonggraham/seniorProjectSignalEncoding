@@ -94,6 +94,7 @@ for letter in userInput:
 	print (enum.get(letter) * 50 + 300)
 	for x in range(durationStart, durationEnd):
 		sine_list_x.append(math.sin(2*math.pi*(enum.get(letter, 46) * 50 + 300)*(x/frate)))
+
 	durationStart = durationEnd;
 #print (sine_list_x)
 wav_file = wave.open(fname, 'w')
