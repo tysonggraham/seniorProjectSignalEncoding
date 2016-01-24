@@ -15,7 +15,7 @@ CHANNELS = 1
 #Frame rate (i.e. frames/second) These frames will be divided by bins of chunk size
 RATE = 44100
 #duration that the microphone will listen
-RECORD_SECONDS = 8
+RECORD_SECONDS = 68
 enum = { 
      0 : 'a',
      1 : 'b',
