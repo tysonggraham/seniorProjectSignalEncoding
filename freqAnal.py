@@ -5,7 +5,7 @@ import pyaudio
 import numpy as np
 import math
 
-#bin size
+#bin size of n
 chunk = 2048
 #definition of integer type of the values coming out as frequencies
 #choices include PaInt32, PaInt16, PaUint16, PaUint32
@@ -74,8 +74,8 @@ def Pitch(signal):
 	# take the difference between each pair of elements. The latter - the former
 	#this is a fancy array of changes in frequency.
 	index = find(np.diff(crossing));
-	# print('signal')
-	# print(signal)
+	print('signal')
+	print(len(signal))
 	# print('index')
 	# print('index')
 	# print('signal')

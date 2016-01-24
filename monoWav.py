@@ -4,12 +4,14 @@ import struct
 import pyaudio
 import sys
 
+
 fname = "WaveTest.wav"; # Filename
 frate = 5000.0; # framerate as a float (also referred to as frequency rate/sample rate)
 data_size = int(frate); # integer of frate
 amp = 20000.0;     # multiplier for amplitude
 userInput = sys.argv[1] if (len(sys.argv) > 1) else input('Please enter your message: \n');
-step_size = 350;
+CHUNK = 32;
+step_size = frate/CHUNK;
 cap = ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '{', '}', '|', ':', '"', '<', '>', '?'];
 low = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '[', ']', '\\', ';', '\'', ',','.', '/'];
 
@@ -109,7 +111,6 @@ for s in sine_list_x:
 wav_file.close()
 
 
-CHUNK = 1024
 
 wf = wave.open(fname, 'rb')
 
