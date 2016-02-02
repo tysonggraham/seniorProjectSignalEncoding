@@ -6,7 +6,7 @@ import numpy as np
 import math
 import cmath
 
-#bin size
+#bin size of n
 chunk = 2048
 #definition of integer type of the values coming out as frequencies
 #choices include PaInt32, PaInt16, PaUint16, PaUint32
@@ -93,6 +93,12 @@ def Pitch(signal):
 	# take the difference between each pair of elements. The latter - the former
 	#this is a fancy array of changes in frequency.
 	index = find(np.diff(crossing));
+	print('signal')
+	print(len(signal))
+	# print('index')
+	# print('index')
+	# print('signal')
+	# print('signal')
 	f0=round(len(index) *RATE /(2*np.prod(len(signal))))
 	f0=round(f0/50) * 50
 	return f0;
