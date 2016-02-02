@@ -10,7 +10,9 @@ frate = 5000.0; # framerate as a float (also referred to as frequency rate or sa
 data_size = int(frate); # integer of frate data_size and fequency are the same so duration of each char rep is 1 second
 amp = 20000.0;     # multiplier for amplitude
 userInput = sys.argv[1] if (len(sys.argv) > 1) else input('Please enter your message: \n');
-CHUNK = 32; #this is calculated by frate/desired step_size or difference in hz from each character representation.
+#this is calculated by frate/desired step_size or difference in hz from each character representation.
+#this should be a power of 2 close to it
+CHUNK = 32; 
 step_size = frate/CHUNK;
 #uppercase characters array
 cap = ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '{', '}', '|', ':', '"', '<', '>', '?'];
