@@ -42,8 +42,6 @@ from collections import Counter
 #     print(freq_in_hertz)
 #     # 439.8975
 #     
-def everyOther (v, offset=0):
-    return [v[i] for i in range(offset, len(v), 2)]
 
 waveFile = wave.open('WaveTest.wav', 'r')
 #num frames is the frate in Monowav.py

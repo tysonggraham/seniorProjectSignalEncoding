@@ -4,15 +4,22 @@ import struct
 import pyaudio
 import sys
 
+##############################################
+# RATE / CHUNK * Record_seconds = number of seconds in recording?
+#############################################
 
-fname = "WaveTest.wav"; # Filename
-frate = 5000.0; # framerate as a float (also referred to as frequency rate or sample rate)
-data_size = int(frate); # integer of frate data_size and fequency are the same so duration of each char rep is 1 second
-amp = 20000.0;     # multiplier for amplitude
+
+# Filename
+fname = "WaveTest.wav"; 
+# framerate as a float (also referred to as frequency rate or sample rate)
+frate = 5000.0; 
+# integer of frate data_size and fequency are the same so duration of each char rep is 1 second
+data_size = int(frate); 
+amp = 20000.0;     # multiplier for amplitude (Is any of this lost when transfering through FFT?)
 userInput = sys.argv[1] if (len(sys.argv) > 1) else input('Please enter your message: \n');
 #this is calculated by frate/desired step_size or difference in hz from each character representation.
 #this should be a power of 2 close to it
-CHUNK = 32; 
+CHUNK = 32; 	# Is this a correct assumption? Should we modify the chunk size?
 step_size = frate/CHUNK;
 #uppercase characters array
 cap = ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '{', '}', '|', ':', '"', '<', '>', '?'];
@@ -94,16 +101,18 @@ for letter in userInput:
 	#This is where we add each frequency to the list to be emitted
 	print ((enum.get(letter, 46) + 1) * step_size)
 	for x in range(durationStart * data_size, durationEnd * data_size):
-		sine_list_x.append(math.sin(2*math.pi*((enum.get(letter, 46) + 1) * step_size)*(x/frate)))
+		sine_list_x.append(math.sin(2*math.pi*((enum.get(letter, 46) + 1) * step_size)*(x/frate))) ####
 	durationStart = durationEnd;
 
 #############################################################################
 # This is where we write to the file.
 #############################################################################
 wav_file = wave.open(fname, 'w')
+''' WAVE FILE PARAMETERS'''
 #This should make it mono
 nchannels = 1
-sampwidth = 2 #width of each sample in bytes.
+sampwidth = 2 #width of each sample in bytes. # How is this different from CHUNK?
+				# Python and Matlab seem to call this CHUNK, why is wav calling it sample width?
 framerate = int(frate) #TODO think about deleting and replacing with data_width or frate. They all share same value
 nframes = data_size #TODO think about replacing with data_size. May keep for clarity.
 comptype = "NONE"
@@ -114,7 +123,8 @@ wav_file.setparams((nchannels, sampwidth, framerate, nframes,
 
 for s in sine_list_x:
     # write the audio frames to file
-    wav_file.writeframes(struct.pack('h', int(s*amp/2)))
+
+    wav_file.writeframes(struct.pack('h', int(s*amp/2)))	# Why is amplitude divided by 2?
 
 wav_file.close()
 
@@ -131,7 +141,7 @@ stream = p.open(format=p.get_format_from_width(wf.getsampwidth()),
                 rate=wf.getframerate(),
                 output=True)
 
-data = wf.readframes(CHUNK)
+data = wf.readframes(CHUNK)	# Is there a specific reason we are reading the file in CHUNKs? Could this be anything?
 
 while data != '':
     stream.write(data)
