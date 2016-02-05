@@ -23,7 +23,7 @@ CHANNELS = 1
 #Frame rate (i.e. frames/second) These frames will be divided by bins of chunk size
 RATE = 44100 # is this in hz? find out
 #duration that the microphone will listen
-RECORD_SECONDS = 1
+RECORD_SECONDS = 3;
 enum = { 
      0 : 'a',
      1 : 'b',
@@ -142,12 +142,12 @@ N = fs * length
 k = 56
 freqs = np.fft.fftfreq(N, 1/fs)
 # print('(k * fs)/N')
-amplitude = 1/N * abs(compute_fft(signalTest))
+amplitude = 1/N * abs(compute_fft(signal))
 fftshiftthingFrequency = np.fft.fftshift(freqs)
 fftshiftthingamplitude = np.fft.fftshift(amplitude)
 print ('frequency(Hz) : amplitude')
-for x in range(len(fftshiftthingFrequency)):
-     if (fftshiftthingamplitude[x] > .1) :
+for x in range(len(fftshiftthingamplitude)):
+     if (fftshiftthingamplitude[x] > 20000) :
           print (fftshiftthingFrequency[x] , ' : ' ,fftshiftthingamplitude[x])
 
 # print('amplitude')
