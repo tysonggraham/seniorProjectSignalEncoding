@@ -68,11 +68,11 @@ k = 56
 freqs = np.fft.fftfreq(fs, 1/fs)
 finalFrequencies = np.fft.fftshift(freqs)
 #NEED TO SPLIT UP DATA HERE BEFORE DOING FFT
-splitData = np.split(data, 3)
+splitData = np.split(data, num_frames/fs)
 # #Now we need to operate on each splite piece of the data.
 amplitude = []
-# for x in range(len(amplitude)):
-amplitude.append(1/N * abs(compute_fft_numpy(splitData[2])))
+for x in range(len(splitData)):
+  amplitude.append(1/N * abs(compute_fft_numpy(splitData[x])))
 #Test to make sure ours works. comment line above and uncomment line below to initiate test.
 # amplitude = 1/N * abs(compute_fft(data))
 
@@ -92,7 +92,7 @@ print ('freq(Hz) : amplitude')
 for i in range(len(finalAmplitude)):
 	for x in range(len(finalAmplitude[i])):
 		# print(finalAmplitude[i])
-		if (finalAmplitude[i][x] > 1000 and finalFrequencies[x] >= 0) :
+		if (finalAmplitude[i][x] > 500 and finalFrequencies[x] >= 0) :
 			print (finalFrequencies[x] , ' : ' ,finalAmplitude[i][x])
 
 #******************************Divide the array into two if it's stereo**********************
