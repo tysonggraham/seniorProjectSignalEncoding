@@ -52,7 +52,7 @@ def compute_fft_numpy(input):
      return np.fft.fft(input);
 
 #**Open the Wav in read mode*****************************************************************
-waveFile = wave.open('WaveTest.wav', 'r')
+waveFile = wave.open('WavTestNew.wav', 'r')
 #****************************************************************************************
 # Set our Variables. Look in useful info below to find variable meanings in more depth.
 #***************************Set directly by Wav FIle info******************************************
@@ -65,7 +65,8 @@ t = linspace(0,length,num=N,endpoint=False) # NEED TO EXPLAIN THIS BETTER
 data = np.asarray(struct.unpack_from("%dh" % num_frames * channels, frames)) #Grab data from Wave to be put into FFT
 k = 56
 #**************************Variables used for final calculation*****************************************************
-freqs = np.fft.fftfreq(fs, 1/fs)
+freqs = np.fft.fftfreq(fs, float(1.0)/float(fs))
+print (freqs)
 finalFrequencies = np.fft.fftshift(freqs)
 #NEED TO SPLIT UP DATA HERE BEFORE DOING FFT
 splitData = np.split(data, 3)
