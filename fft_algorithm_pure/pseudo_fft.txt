@@ -1,0 +1,44 @@
+* Define a function to compute the fft of a signal
+function fft with parameter(s): signal
+	* Set up base case (simple return)
+	if length of signal less than or equal to 1 
+		return signal
+
+	* Divide and conquer portion
+	even <- Call fft with argument(s): even values of signal
+	odd <- Call fft with argument(s): odd values of signal
+
+	* Calculate DFT for the odd solutions stepping by 2
+	T <- (odd at k)*e^(-i*2*(PI)*k*n/N) for each k in (lengh of signal stepping by 2)
+
+	* Return Complicated Condition (complex number)
+	* We use symmetry to combine the even and odd values at k
+	Return (
+				(even at k) + (t at k) for each k in (lenth of signal stepping by 2) +
+				(even at k) - (t at k) for each k in (lenth of signal stepping by 2) 
+			)
+
+
+* Define a function to compute the fft of a signal
+function fft with parameter(s): signal
+	* Get number of inputs
+	n <- length of signal
+
+	* Set up Output
+	output <- n complex 0's
+
+	* for each output element
+	for each k in 0 to n
+		* Reset Output
+		s <- complex(0)
+
+		* for each input element
+		for each t in 0 to n
+			* sum up the sigmoids
+			s += (input at t) * e^-(2*(pi)*t*k/n)
+
+		* Set output
+		output at k <- s
+
+	* Everything is set in output
+	Return output

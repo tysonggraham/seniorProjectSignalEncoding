@@ -1,0 +1,42 @@
+* Open wave file
+wave_file <- Open WaveTest.wav as read only
+
+* Get info from wave file
+channels <- Get from wave_file
+sample_width <- Get from wave_file
+frame_rate <- Get from wave_file
+number_frames <- Get from wave_file
+compression_type <- Get from wave_file
+compression_name <- Get from wave_file
+
+* Get the actual signals
+frames <- Get from wave_file
+
+********* SET UP INTERMEDIARY VALUES **************
+* Get the total number of inputs
+n = number_frames / channels
+
+* Get data from wave_file
+data <- Unpack data
+
+* get the frequencies
+frequencies <- Call fftfreq with arguments: frame_rate, 1 / frame_rate
+
+* Split the data to usable chunks
+splitData <- split data by number_frames / frame_rate
+
+* Figure out the amplitures for each frequency
+amplitude <- []
+for each signal in splitData
+	Push 1 / n * (absolute value of fft with argument(s): signal)
+************************************************************
+
+* Get final values
+final_frequencies <- Call fftshift with argument(s): frequencies
+final_amplitudes <- Call fftshift with argument(s): amplitude
+
+* Print the values
+for each amplitude_array, frequency in final_amplitudes, final_frequencies
+	for each amplitude in amplitude_array
+		if amplitude > threshold and frequency > 0
+			print frequency: amplitude

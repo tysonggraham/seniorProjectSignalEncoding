@@ -66,24 +66,23 @@ data = np.asarray(struct.unpack_from("%dh" % num_frames * channels, frames)) #Gr
 k = 56
 #**************************Variables used for final calculation*****************************************************
 freqs = np.fft.fftfreq(fs, 1/fs)
-finalFrequencies = np.fft.fftshift(freqs)
 #NEED TO SPLIT UP DATA HERE BEFORE DOING FFT
-splitData = np.split(data, 3)
+splitData = np.split(data, num_frames/fs)
 # #Now we need to operate on each splite piece of the data.
 amplitude = []
-# for x in range(len(amplitude)):
-amplitude.append(1/N * abs(compute_fft_numpy(splitData[2])))
+for x in range(len(splitData)):
+  amplitude.append(1/N * abs(compute_fft_numpy(splitData[x])))
 #Test to make sure ours works. comment line above and uncomment line below to initiate test.
 # amplitude = 1/N * abs(compute_fft(data))
 
 #*********************Reorder the results to print out prettier**************************************
 finalFrequencies = np.fft.fftshift(freqs)
 
-finalAmplitude = np.fft.fftshift(amplitude)
+finalAmplitudes = np.fft.fftshift(amplitude)
 
-# print(len(finalAmplitude[0]))
-# print(len(finalAmplitude[1]))
-# print(len(finalAmplitude[2]))
+# print(len(finalAmplitudes[0]))
+# print(len(finalAmplitudes[1]))
+# print(len(finalAmplitudes[2]))
 # print('len(finalFrequencies)')
 # print(len(finalFrequencies))
 
@@ -94,7 +93,6 @@ for i in range(len(finalAmplitude)):
     # print(finalAmplitude[i])
     if (finalAmplitude[i][x] > 1000 and finalFrequencies[x] >= 0) :
       print (finalFrequencies[x] , ' : ' ,finalAmplitude[i][x])
-
 #******************************Divide the array into two if it's stereo**********************
 if channels == 2:
     left = np.array(data[0::2])
