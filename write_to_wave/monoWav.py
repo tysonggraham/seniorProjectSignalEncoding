@@ -7,11 +7,10 @@ import sys
 ##############################################
 # RATE / CHUNK * Record_seconds = number of seconds in recording?
 #############################################
-
 # Filename
-fname = "WaveTest.wav"; 
+fname = "WaveTest.wav";
 # framerate as a float (also referred to as frequency rate or sample rate)
-frate = 5000.0; 
+frate = 8192.0; 
 # integer of frate data_size and fequency are the same so duration of each char rep is 1 second
 data_size = int(frate); 
 amp = 20000.0;     # multiplier for amplitude (Is any of this lost when transfering through FFT?)
@@ -111,7 +110,7 @@ wav_file = wave.open(fname, 'w')
 ''' WAVE FILE PARAMETERS'''
 #This should make it mono
 nchannels = 1
-sampwidth = 2 #width of each sample in bytes. # How is this different from CHUNK?
+sampwidth = 2   #width of each sample in bytes. # How is this different from CHUNK?
 				# Python and Matlab seem to call this CHUNK, why is wav calling it sample width?
 framerate = int(frate) #TODO think about deleting and replacing with data_width or frate. They all share same value
 nframes = data_size #TODO think about replacing with data_size. May keep for clarity.
