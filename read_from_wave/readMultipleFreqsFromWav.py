@@ -60,10 +60,10 @@ waveFile = wave.open('WaveTest.wav', 'r')
 frames = waveFile.readframes(num_frames * channels)
 #***************************Variables for intermediary calculations******************************
 length = num_frames/(fs*channels) #Length of each sample?
-N = int(fs * length)  # Total number of samples?
-t = linspace(0,length,num=N,endpoint=False) # NEED TO EXPLAIN THIS BETTER
+N = int(num_frames/channels)  # Total number of samples?
+#t = linspace(0,length,num=N,endpoint=False) # NEED TO EXPLAIN THIS BETTER
 data = np.asarray(struct.unpack_from("%dh" % num_frames * channels, frames)) #Grab data from Wave to be put into FFT
-k = 56
+#k = 56
 #**************************Variables used for final calculation*****************************************************
 freqs = np.fft.fftfreq(fs, 1/fs)
 #NEED TO SPLIT UP DATA HERE BEFORE DOING FFT
@@ -88,11 +88,11 @@ finalAmplitudes = np.fft.fftshift(amplitude)
 
 #*******************************Print out the results*************************************************
 print ('freq(Hz) : amplitude')
-for i in range(len(finalAmplitude)):
-  for x in range(len(finalAmplitude[i])):
-    # print(finalAmplitude[i])
-    if (finalAmplitude[i][x] > 1000 and finalFrequencies[x] >= 0) :
-      print (finalFrequencies[x] , ' : ' ,finalAmplitude[i][x])
+for i in range(len(finalAmplitudes)):
+  for x in range(len(finalAmplitudes[i])):
+    # print(finalAmplitudes[i])
+    if (finalAmplitudes[i][x] > 1000 and finalFrequencies[x] >= 0) :
+      print (finalFrequencies[x] , ' : ' ,finalAmplitudes[i][x])
 #******************************Divide the array into two if it's stereo**********************
 if channels == 2:
     left = np.array(data[0::2])
