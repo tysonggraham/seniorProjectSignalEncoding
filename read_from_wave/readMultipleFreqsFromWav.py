@@ -60,7 +60,7 @@ enum = {
 }
 
 def determineCharRep(fs, freq):
-  CHUNK = 32
+  CHUNK = 128
   step_size = fs/CHUNK
   letter = (freq/step_size)-1
   return enum.get(letter)
@@ -133,7 +133,6 @@ finalFrequencies = freqs
 #finalAmplitudes = np.fft.fftshift(amplitude)
 finalAmplitudes = amplitude
 #*******************************Print out the results************************************************
-#determineCharRep(8192, 2560);
 stringOfResults = ""
 print ('freq(Hz) : amplitude')
 for i in range(len(finalAmplitudes)):

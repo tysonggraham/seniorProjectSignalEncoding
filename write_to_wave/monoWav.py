@@ -17,7 +17,7 @@ amp = 20000.0;     # multiplier for amplitude (Is any of this lost when transfer
 userInput = sys.argv[1] if (len(sys.argv) > 1) else input('Please enter your message: \n');
 #this is calculated by frate/desired step_size or difference in hz from each character representation.
 #this should be a power of 2 close to it
-CHUNK = 32; 	# Is this a correct assumption? Should we modify the chunk size?
+CHUNK = 128; 	# Is this a correct assumption? Should we modify the chunk size?
 step_size = frate/CHUNK;
 #uppercase characters array
 cap = ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '{', '}', '|', ':', '"', '<', '>', '?'];
