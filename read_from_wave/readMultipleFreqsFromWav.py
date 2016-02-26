@@ -7,6 +7,11 @@ import numpy as np
 from numpy import linspace, pi, cos, absolute
 import cmath
 import math
+import re
+#uppercase characters array
+cap = ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '{', '}', '|', ':', '"', '<', '>', '?'];
+#lowercase characters array
+low = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '[', ']', '\\', ';', '\'', ',','.', '/'];
 
 # Each character is assigned a frequency in hz here.
 enum = { 
@@ -58,22 +63,32 @@ enum = {
   45 : '.',
   46 : '/'
 }
+def isThisGonnaWork(letter):
+  if (letter.islower()): #if it is an uppercase letter
+    print('if statement')
+    return letter.upper();
+  elif (letter in low): #or if it is in the caps array
+    print('you are in an else if mother flipper')
+    print('letter')
+    print(letter)
+    print('low.index(letter)')
+    print(low.index(letter))
+    print('cap[low.index(letter)]')
+    print(cap[low.index(letter)])
+
+    
+    return cap[low.index(letter)];
 
 def determineCharRep(fs, freq):
-  print('fs')
-  print(fs)
-  print('freq')
-  print(freq)
+  # print('fs')
+  # print(fs)
+  # print('freq')
+  # print(freq)
+
   CHUNK = 32
-  print('CHUNK')
-  print(CHUNK)
-  step_size = fs/CHUNK
-  print('step_size')
-  print(step_size)
+  step_size = 100
   letter = (int(freq/step_size))-1
-  print('letter')
-  print(letter)
-  return enum.get(letter, '?')
+  return enum.get(letter, ' ')
 
 #*****************************************************************************************
 # This is our implementation of the dft
@@ -145,9 +160,37 @@ finalAmplitudes = amplitude
 #*******************************Print out the results************************************************
 #determineCharRep(8192, 2560);
 stringOfResults = ""
-print ('freq(Hz) : amplitude')
+#print ('freq(Hz) : amplitude')
+count = 0
+prevLetter = ''
+#print(len(finalAmplitudes))
 for i in range(len(finalAmplitudes)):
+#  print(len(finalAmplitudes[i]))
+ # print(finalAmplitudes[i])
   maxIndex = np.argmax(finalAmplitudes[i])
-  print( finalFrequencies[maxIndex], ':', finalAmplitudes[i][maxIndex])
-  stringOfResults += (determineCharRep(fs,abs(finalFrequencies[maxIndex])))
+  if(maxIndex > fs):
+    maxIndex -= fs
+  #print( finalFrequencies[maxIndex], ':', finalAmplitudes[i][maxIndex])
+  letter = determineCharRep(fs,abs(finalFrequencies[maxIndex]))
+  print('letter = ' + letter)
+  if (prevLetter == letter):
+    count +=1
+    print('count = ' , count)
+    if(count > 2):
+      prevLetter = isThisGonnaWork(letter)
+      print('prevLetter = ' + prevLetter)
+      count = 1
+      print('count = ' , count)
+  else:
+    for x in range(count):
+      stringOfResults += prevLetter
+      print("stringOfResults = " + stringOfResults)
+    prevLetter = letter
+    print('prevletter = ' + prevLetter)
+
+    count = 1
+    print('count = ' , count)
+for i in range(count):
+  stringOfResults += prevLetter
 print(stringOfResults)
+#make this more efficient later by integrating it in former for loop
