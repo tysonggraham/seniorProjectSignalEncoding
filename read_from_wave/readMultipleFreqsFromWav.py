@@ -60,10 +60,20 @@ enum = {
 }
 
 def determineCharRep(fs, freq):
+  print('fs')
+  print(fs)
+  print('freq')
+  print(freq)
   CHUNK = 32
+  print('CHUNK')
+  print(CHUNK)
   step_size = fs/CHUNK
-  letter = (freq/step_size)-1
-  return enum.get(letter)
+  print('step_size')
+  print(step_size)
+  letter = (int(freq/step_size))-1
+  print('letter')
+  print(letter)
+  return enum.get(letter, '?')
 
 #*****************************************************************************************
 # This is our implementation of the dft
@@ -107,7 +117,7 @@ def compute_fft_numpy(input):
      return np.fft.fft(input);
 
 #**Open the Wav in read mode*****************************************************************
-waveFile = wave.open('WaveTest.wav', 'r')
+waveFile = wave.open('song3.wav', 'r')
 #****************************************************************************************
 # Set our Variables. Look in useful info below to find variable meanings in more depth.
 #***************************Set directly by Wav FIle info************************************

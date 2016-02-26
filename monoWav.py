@@ -13,12 +13,12 @@ fname = "WaveTest.wav";
 frate = 12000.0; 
 # integer of frate data_size and fequency are the same so duration of each char rep is 1 second
 data_size = int(frate); 
-amp = 20000.0;     # multiplier for amplitude (Is any of this lost when transfering through FFT?)
+amp = 50000.0;     # multiplier for amplitude (Is any of this lost when transfering through FFT?)
 userInput = sys.argv[1] if (len(sys.argv) > 1) else input('Please enter your message: \n');
 #this is calculated by frate/desired step_size or difference in hz from each character representation.
 #this should be a power of 2 close to it
 CHUNK = 32; 	# Is this a correct assumption? Should we modify the chunk size?
-step_size = frate/CHUNK;
+step_size = 100;
 #uppercase characters array
 cap = ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '{', '}', '|', ':', '"', '<', '>', '?'];
 #lowercase characters array
@@ -77,6 +77,7 @@ enum = {
 
 sine_list_x = []
 durationStart = 0;
+
 for letter in userInput:
 	if letter.isupper(): #if it is an uppercase letter
 		duration = 3;    #set char reps duration to 3 secs
@@ -97,16 +98,14 @@ for letter in userInput:
 	durationEnd = durationStart + duration
 	#print ('duration End = ' + str(durationEnd))
 	#This is where we add each frequency to the list to be emitted
-	print ((enum.get(letter, 46) + 1) * step_size)
+	print ((enum.get(letter, 47) + 1) * step_size)
 	for x in range(durationStart * data_size, durationEnd * data_size):
-		sine_list_x.append(math.sin(2*math.pi*((enum.get(letter, 46) + 1) * step_size)*(x/frate))) ####
+		sine_list_x.append(math.sin(2*math.pi*((enum.get(letter, 47) + 1) * step_size)*(x/frate))) ####
 	durationStart = durationEnd;
 
 #############################################################################
 # This is where we write to the file.
 #############################################################################
-print('step_size')
-print(step_size)
 wav_file = wave.open(fname, 'w')
 ''' WAVE FILE PARAMETERS'''
 #This should make it mono
