@@ -68,10 +68,12 @@ def main():
       return letter.upper();
     elif (letter in low): #or if it is in the caps array
       return cap[low.index(letter)];
+      print(letter)
+    return ''
 
   def determineCharRep(fs, freq):
     step_size = 100
-    letter = (int(freq/step_size))-1
+    letter = (int(freq/step_size))-3
     return enum.get(letter, ' ')
 
   #*****************************************************************************************
@@ -115,6 +117,37 @@ def main():
   def compute_fft_numpy(input):
        return np.fft.fft(input);
 
+  def filterResultString(stringOfResults):
+    import re
+    #definitely keep
+    newPrevChar = ''
+    newstringOfResults = ""
+    guessString = ''
+    alternativeString = ''
+    #might keep
+    semiFinalString = ''
+    finalString = ''
+
+    for currentChar in stringOfResults:
+      # print('newPrevChar:' + newPrevChar +' currentChar:' + currentChar)
+      newstringOfResults+=newPrevChar
+      newPrevChar = currentChar
+    newstringOfResults+=newPrevChar
+    for currentCharIndex in range(len(newstringOfResults)//2):
+      if(newstringOfResults[currentCharIndex * 2] == newstringOfResults[currentCharIndex * 2 + 1]):
+        guessString += newstringOfResults[currentCharIndex * 2]
+        alternativeString += newstringOfResults[currentCharIndex * 2]
+      else:
+        if(ord(newstringOfResults[currentCharIndex * 2]) > ord(newstringOfResults[currentCharIndex * 2+1])):
+          guessString += newstringOfResults[currentCharIndex * 2]
+          alternativeString += newstringOfResults[currentCharIndex * 2+1]
+        else:
+          guessString += newstringOfResults[currentCharIndex * 2+1]
+          alternativeString += newstringOfResults[currentCharIndex * 2]
+    print(alternativeString)
+    print(guessString)
+    guessString = re.sub(r'.*zzyy(.+)zzyy.*', r'\1', guessString)
+    print(guessString)
   #**Open the Wav in read mode*****************************************************************
   waveFile = wave.open('output.wav', 'r')
   #****************************************************************************************
@@ -152,19 +185,37 @@ def main():
     if(maxIndex > fs):
       maxIndex -= fs
     letter = determineCharRep(fs,abs(freqs[maxIndex]))
-    if (prevLetter == letter):
-      count +=1
-      if(count > 3):
-        prevLetter = isCapital(letter)
-        count = 1
-    else:
-      for x in range(count):
-        stringOfResults += prevLetter
-      prevLetter = letter
-      count = 1
-  for i in range(count):
-    stringOfResults += prevLetter
+  print('stringOfResults')
   print(stringOfResults)
+  filterResultString(stringOfResults);
+  print('stringOfResults')
+  print(stringOfResults)
+
+
+
+
+  #   if (prevLetter == letter):
+  #     count +=1
+  #     if(count > 3):
+  #       prevLetter = isCapital(letter)
+  #       count = 1
+  #   else:
+  #     for x in range(count):
+  #       stringOfResults += prevLetter
+  #     prevLetter = letter
+  #     count = 1
+  # for i in range(count):
+  #   stringOfResults += prevLetter
+  # print(stringOfResults)
+
+  newcount = 0
+  newPrevChar = ''
+  for currentChar in stringOfResults:
+    if (newPrevChar == '-'):
+      print("you made it")
+    newPrevChar = currentChar
+    print('newPrevChar')
+    print(newPrevChar)
 
 if __name__ == "__main__":
   main()
