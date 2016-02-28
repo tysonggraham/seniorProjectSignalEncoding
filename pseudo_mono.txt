@@ -1,0 +1,81 @@
+* Set up our output filename
+filename <- "WaveTest.wav"
+
+* Set up our framerate
+frame_rate <- 5000
+
+* How many samples for our signal (frame_rate for 1 second)
+data_size <- frame_rate
+
+* amplitude for our sounds generated (theoretically as loud as possible)
+amplitude <- 20000
+
+* Set up user input for string to send
+input <- Console Input
+
+* Set up chunk size for input to wave file (in bytes)
+chunk <- 32
+
+* Set up step size for our frequencies (may change this for better results) (in hertz)
+step <- 150
+
+* Set up capital array for non-alpha characters
+capital <- ~, !, @, #, ..., <, >, ?
+
+* Set up corresponding lower case array
+lower <- `, 1, 2, 3, ,, ., /
+
+* Help assign each character a frequency step (a will be lowest freq and / will be highest freq)
+enumberation <- a: 0, b: 1, c:2, ..., `: 26, 1:27, 2:28, ..., -: 37, =: 38, {: 39, ..., ,: 44, .: 45, /: 46
+
+* Set up blank sine wave listing
+sine_list <- []
+
+* Start duration at 0
+duration_start <- 0
+
+*********** SET UP SINE LISTING FOR SIGNAL *****************************
+
+for each letter in input
+	* Set up the duration of the letter
+	if letter is uppercase
+		duration <- 3
+	else (letter is lowercase)
+		duration <- 1
+
+	* Figure out when to end the signal
+	duration_end <- duration_start + duration
+
+	* Set up our sine_list array
+	for each moment in duration_start to duration_end
+		push letters frequency to sine_list
+
+	* Set starting time of next signal to the ending time of this one
+	duration_start = duration_end
+
+************************************************************************
+
+************* WRITE TO THE WAV FILE ************************************
+
+*** SETUP VARIABLES ***
+* Open a wave file to write to
+wave_file <- open filename with write prililages
+
+* Mono Recording
+number_channels <- 1
+
+* Set up how long our samples will be
+sample_width <- 2
+
+*** WRITE TO WAVE FILE ***
+* Set up wave file
+Set wave_file params
+
+* Write the wave file
+for each signal in sine_list
+	Write frames to file
+
+* Close the wave file
+Close wave_file
+
+************************************************************************

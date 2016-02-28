@@ -116,7 +116,7 @@ def main():
        return np.fft.fft(input);
 
   #**Open the Wav in read mode*****************************************************************
-  waveFile = wave.open('output.wav', 'r')
+  waveFile = wave.open('song3.wav', 'r')
   #****************************************************************************************
   # Set our Variables. Look in useful info below to find variable meanings in more depth.
   #***************************Set directly by Wav FIle info************************************
@@ -128,13 +128,6 @@ def main():
   #**************************Variables used for final calculation*****************************************************
   freqs = np.fft.fftfreq(fs, 1/fs)
   #NEED TO SPLIT UP DATA HERE BEFORE DOING FFT
-  print('data')
-  print(data)
-  print('num_frames')
-  print(num_frames)
-  print('fs')
-  print(fs)
-
   splitData = np.split(data, num_frames/fs)
   # #Now we need to operate on each splite piece of the data.
   amplitudes = []
