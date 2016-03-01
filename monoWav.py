@@ -4,30 +4,29 @@ import struct
 import pyaudio
 import sys
 
-##############################################
+##################################################################
 # RATE / CHUNK * Record_seconds = number of seconds in recording?
-#############################################
-
+##################################################################
 
 # Filename
-fname = "WaveTest.wav"; 
+fname = "WaveTest.wav";
 # framerate as a float (also referred to as frequency rate or sample rate)
-frate = 48000.0; 
+frate = 48000.0;
 # integer of frate data_size and fequency are the same so duration of each char rep is 1 second
-data_size = int(frate); 
+data_size = int(frate*1.003);
 amp = 40000.0;     # multiplier for amplitude (Is any of this lost when transfering through FFT?)
 userInput = sys.argv[1] if (len(sys.argv) > 1) else input('Please enter your message: \n');
 #this is calculated by frate/desired step_size or difference in hz from each character representation.
 #this should be a power of 2 close to it
 CHUNK = 32 	# Is this a correct assumption? Should we modify the chunk size?
-step_size = 100
+step_size = 101
 #uppercase characters array
 cap = ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '{', '}', '|', ':', '"', '<', '>', '?'];
 #lowercase characters array
 low = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '[', ']', '\\', ';', '\'', ',','.', '/'];
 
 # Each character is assigned a frequency in hz here.
-enum = { 
+enum = {
 	'a' : 0,
 	'b' : 1,
 	'c' : 2,
@@ -82,18 +81,18 @@ durationStart = 0;
 
 for letter in userInput:
 	if letter.isupper(): #if it is an uppercase letter
-		duration = 8;    #set char reps duration to 3 secs
+		duration = 4;    #set char reps duration to 3 secs
 
 		# Lowercase the letter
 		letter = letter.lower() 
 	elif (letter in cap):	#or if it is in the caps array
-		duration = 8;    #set char reps duration to 3 secs
+		duration = 4;    #set char reps duration to 3 secs
 
 		# Find where letter is in cap
 		# Set letter to that location in lower
 		letter = low[cap.index(letter)];
 	else:
-		duration = 2;    #set char reps duration to 1 sec
+		duration = 1;    #set char reps duration to 1 sec
 		
 	#This is to test what frequency we assigned for each character. The default case is 4500 which is for the space
 	#print (freq.get(letter, 4500))
@@ -102,7 +101,7 @@ for letter in userInput:
 	#This is where we add each frequency to the list to be emitted
 	print ((enum.get(letter, 47) + 1) * step_size)
 	for x in range(durationStart * data_size, durationEnd * data_size):
-		sine_list_x.append(math.sin(2*math.pi*((enum.get(letter, 47) + 3) * step_size)*(x/frate))) ####
+		sine_list_x.append(math.sin(2*math.pi*((enum.get(letter, 47) + 6) * step_size)*(x/frate))) ####
 	durationStart = durationEnd;
 
 #############################################################################
