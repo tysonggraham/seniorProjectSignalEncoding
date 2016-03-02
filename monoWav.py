@@ -82,18 +82,18 @@ durationStart = 0;
 
 for letter in userInput:
 	if letter.isupper(): #if it is an uppercase letter
-		duration = 8;    #set char reps duration to 3 secs
+		duration = 4;    #set char reps duration to 3 secs
 
 		# Lowercase the letter
 		letter = letter.lower() 
 	elif (letter in cap):	#or if it is in the caps array
-		duration = 8;    #set char reps duration to 3 secs
+		duration = 4;    #set char reps duration to 3 secs
 
 		# Find where letter is in cap
 		# Set letter to that location in lower
 		letter = low[cap.index(letter)];
 	else:
-		duration = 2;    #set char reps duration to 1 sec
+		duration = 1;    #set char reps duration to 1 sec
 		
 	#This is to test what frequency we assigned for each character. The default case is 4500 which is for the space
 	#print (freq.get(letter, 4500))
@@ -102,7 +102,7 @@ for letter in userInput:
 	#This is where we add each frequency to the list to be emitted
 	print ((enum.get(letter, 47) + 1) * step_size)
 	for x in range(durationStart * data_size, durationEnd * data_size):
-		sine_list_x.append(math.sin(2*math.pi*((enum.get(letter, 47) + 3) * step_size)*(x/frate))) ####
+		sine_list_x.append(math.sin(2*math.pi*((enum.get(letter, 47) + 6) * step_size)*(x/frate))) ####
 	durationStart = durationEnd;
 
 #############################################################################
