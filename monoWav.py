@@ -4,30 +4,29 @@ import struct
 import pyaudio
 import sys
 
-##############################################
+##################################################################
 # RATE / CHUNK * Record_seconds = number of seconds in recording?
-#############################################
-
+##################################################################
 
 # Filename
-fname = "WaveTest.wav"; 
+fname = "WaveTest.wav";
 # framerate as a float (also referred to as frequency rate or sample rate)
-frate = 48000.0; 
+frate = 48000.0;
 # integer of frate data_size and fequency are the same so duration of each char rep is 1 second
-data_size = int(frate); 
+data_size = int(frate*1.003);
 amp = 40000.0;     # multiplier for amplitude (Is any of this lost when transfering through FFT?)
 userInput = sys.argv[1] if (len(sys.argv) > 1) else input('Please enter your message: \n');
 #this is calculated by frate/desired step_size or difference in hz from each character representation.
 #this should be a power of 2 close to it
 CHUNK = 32 	# Is this a correct assumption? Should we modify the chunk size?
-step_size = 100
+step_size = 101
 #uppercase characters array
 cap = ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '{', '}', '|', ':', '"', '<', '>', '?'];
 #lowercase characters array
 low = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '[', ']', '\\', ';', '\'', ',','.', '/'];
 
 # Each character is assigned a frequency in hz here.
-enum = { 
+enum = {
 	'a' : 0,
 	'b' : 1,
 	'c' : 2,

@@ -1,3 +1,4 @@
+=======
 import wave
 import struct
 from collections import Counter
@@ -72,8 +73,9 @@ def main():
     return ''
 
   def determineCharRep(fs, freq):
-    step_size = 100
-    letter = (int(freq/step_size))-3
+    step_size = 101
+    letter = (int(freq/step_size))-6
+    print ('Letter in determineCharRep: ', letter)
     return enum.get(letter, ' ')
 
   #*****************************************************************************************
@@ -120,29 +122,30 @@ def main():
   def filterResultString(stringOfResults):
     import re
     #definitely keep
-    newPrevChar = ''
+    prevChar = ''
     guessString = ''
     alternativeString = ''
     #might keep
     semiFinalString = ''
     finalString = ''
 
-    for currentCharIndex in range(len(stringOfResults)//2):
-      if(stringOfResults[currentCharIndex * 2] == stringOfResults[currentCharIndex * 2 + 1]):
-        guessString += stringOfResults[currentCharIndex * 2]
-        alternativeString += stringOfResults[currentCharIndex * 2]
-      else:
-        if(ord(stringOfResults[currentCharIndex * 2]) > ord(stringOfResults[currentCharIndex * 2+1])):
-          guessString += stringOfResults[currentCharIndex * 2]
-          alternativeString += stringOfResults[currentCharIndex * 2+1]
-        else:
-          guessString += stringOfResults[currentCharIndex * 2+1]
-          alternativeString += stringOfResults[currentCharIndex * 2]
-    print(alternativeString)
-    print(guessString)
-    guessString = re.sub(r'.*zz+yy+(.+)zz+yy+.*', r'\1', guessString)
-    print(guessString)
-    return guessString
+    # for currentCharIndex in range(len(stringOfResults)//2):
+    #   if(stringOfResults[currentCharIndex * 2] == stringOfResults[currentCharIndex * 2 + 1]):
+    #     guessString += stringOfResults[currentCharIndex * 2]
+    #     alternativeString += stringOfResults[currentCharIndex * 2]
+    #   else:
+    #     if(ord(stringOfResults[currentCharIndex * 2]) > ord(stringOfResults[currentCharIndex * 2+1])):
+    #       guessString += stringOfResults[currentCharIndex * 2]
+    #       alternativeString += stringOfResults[currentCharIndex * 2+1]
+    #     else:
+    #       guessString += stringOfResults[currentCharIndex * 2+1]
+    #       alternativeString += stringOfResults[currentCharIndex * 2]
+    # print(alternativeString)
+    # print(guessString)
+    # guessString = re.sub(r'.*zz+yy+(.+)zz+yy+.*', r'\1', guessString)
+    # print(guessString)
+    # return guessString
+    return re.sub(r'.*``+([^`]+\w*)``+.*', r'\1', stringOfResults)
   #**Open the Wav in read mode*****************************************************************
   waveFile = wave.open('output.wav', 'r')
   #****************************************************************************************
@@ -176,10 +179,14 @@ def main():
   count = 0
   prevLetter = ''
   for i in range(len(amplitudes)):
+    # We are getting the maximum aplitude over the duration of time.
     maxIndex = np.argmax(amplitudes[i])
+    # Use Symmetry to get it at right index.
     if(maxIndex > fs):
       maxIndex -= fs
+    # print(determineCharRep(fs,abs(freqs[maxIndex])))
     stringOfResults += determineCharRep(fs,abs(freqs[maxIndex]))
+    print ('Current String Of Results: ', stringOfResults)
   print('stringOfResults')
   print(stringOfResults)
   stringOfResults = filterResultString(stringOfResults);
