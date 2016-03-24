@@ -1,4 +1,3 @@
-=======
 import wave
 import struct
 from collections import Counter
@@ -157,7 +156,7 @@ def main():
   N = int(num_frames/channels)  # Total number of samples?
   data = np.asarray(struct.unpack_from("%dh" % num_frames * channels, frames)) #Grab data from Wave to be put into FFT
   #**************************Variables used for final calculation*****************************************************
-  freqs = np.fft.fftfreq(fs, 1/fs)
+  freqs = np.fft.fftfreq(fs, int(1/fs))
   #NEED TO SPLIT UP DATA HERE BEFORE DOING FFT
   print('data')
   print(data)

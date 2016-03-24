@@ -13,13 +13,13 @@ fname = "WaveTest.wav";
 # framerate as a float (also referred to as frequency rate or sample rate)
 frate = 48000.0;
 # integer of frate data_size and fequency are the same so duration of each char rep is 1 second
-data_size = int(frate*1.003);
+data_size = int(frate*1.005);
 amp = 40000.0;     # multiplier for amplitude (Is any of this lost when transfering through FFT?)
 userInput = sys.argv[1] if (len(sys.argv) > 1) else input('Please enter your message: \n');
 #this is calculated by frate/desired step_size or difference in hz from each character representation.
 #this should be a power of 2 close to it
 CHUNK = 32 	# Is this a correct assumption? Should we modify the chunk size?
-step_size = 101
+step_size = 202
 #uppercase characters array
 cap = ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '{', '}', '|', ':', '"', '<', '>', '?'];
 #lowercase characters array
@@ -74,6 +74,7 @@ enum = {
 	',' : 44,
 	'.' : 45,
 	'/' : 46,
+	' ' : 47
 }
 
 sine_list_x = []
@@ -99,7 +100,7 @@ for letter in userInput:
 	durationEnd = durationStart + duration
 	#print ('duration End = ' + str(durationEnd))
 	#This is where we add each frequency to the list to be emitted
-	print ((enum.get(letter, 47) + 1) * step_size)
+	print ((enum.get(letter, 47) + 6) * step_size)
 	for x in range(durationStart * data_size, durationEnd * data_size):
 		sine_list_x.append(math.sin(2*math.pi*((enum.get(letter, 47) + 6) * step_size)*(x/frate))) ####
 	durationStart = durationEnd;
