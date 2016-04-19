@@ -1,4 +1,4 @@
-import readMultipleFreqsFromWav
+import inaudibleFreqsFromWav
 import pyaudio
 import wave
 
@@ -7,7 +7,7 @@ def main():
 	FORMAT = pyaudio.paInt16
 	CHANNELS = 2
 	RATE = 48000
-	RECORD_SECONDS = 3
+	RECORD_SECONDS = 5
 	WAVE_OUTPUT_FILENAME = "output.wav"
 
 	p = pyaudio.PyAudio()
@@ -40,4 +40,4 @@ def main():
 	wf.close()
 if __name__ == "__main__":
 	main()
-	readMultipleFreqsFromWav.main()
+	inaudibleFreqsFromWav.main()

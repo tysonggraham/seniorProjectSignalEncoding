@@ -14,53 +14,22 @@ def main():
 
   # Each character is assigned a frequency in hz here.
   enum = { 
-    0 : 'a',
-    1 : 'b',
-    2 : 'c',
-    3 : 'd',
-    4 : 'e',
-    5 : 'f',
-    6 : 'g',
-    7 : 'h',
-    8 : 'i',
-    9 : 'j',
-    10 : 'k',
-    11 : 'l',
-    12 : 'm',
-    13 : 'n',
-    14 : 'o',
-    15 : 'p',
-    16 : 'q',
-    17 : 'r',
-    18 : 's',
-    19 : 't',
-    20 : 'u',
-    21 : 'v',
-    22 : 'w',
-    23 : 'x',
-    24 : 'y',
-    25 : 'z',
-    26 : '`',
-    27 : '1',
-    28 : '2',
-    29 : '3',
-    30 : '4',
-    31 : '5',
-    32 : '6',
-    33 : '7',
-    34 : '8',
-    35 : '9',
-    36 : '0',
-    37 : '-',
-    38 : '=',
-    39 : '[',
-    40 : ']',
-    41 : '\\',
-    42 : ';',
-    43 : '\'',
-    44 : ',',
-    45 : '.',
-    46 : '/'
+    0 : '0',
+    1 : '1',
+    2 : '2',
+    3 : '3',
+    4 : '4',
+    5 : '5',
+    6 : '6',
+    7 : '7',
+    8 : '8',
+    9 : '9',
+    10: 'a',
+    11: 'b',
+    12: 'c',
+    13: 'd',
+    14: 'e',
+    15: 'f',
   }
 
   def isCapital(letter):
@@ -72,10 +41,10 @@ def main():
     return ''
 
   def determineCharRep(fs, freq):
-    step_size = 101
-    letter = (int(freq/step_size))-6
+    step_size = 202
+    letter = (int((freq-18000)/step_size))-1
     print ('Letter in determineCharRep: ', letter)
-    return enum.get(letter, ' ')
+    return enum.get(letter, '?')
 
   #*****************************************************************************************
   # This is our implementation of the dft
